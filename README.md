@@ -41,22 +41,23 @@ partageant le même site Pages. Le workflow se déclenche à chaque push sur
 dépôt tel quel avec `actions/upload-pages-artifact` +
 `actions/deploy-pages`.
 
-URL actuelle : `https://sachaprovence.github.io/pizza-vellano/`. Les
-balises `canonical`, Open Graph et les données structurées Schema.org du
-site pointent vers cette URL.
+**Nom de domaine : `www.pizza-vellano.fr`.** Le fichier `CNAME` à la
+racine du dépôt contient `www.pizza-vellano.fr`, et les balises
+`canonical`, Open Graph et les données structurées Schema.org du site
+pointent vers ce domaine.
 
-**Nom de domaine cible : `www.pizza-vellano.fr`** (pas encore acheté).
-Une fois le domaine acquis :
+Côté DNS (zone du registrar, ex. IONOS) :
 
-1. Recréer un fichier `CNAME` à la racine du dépôt contenant
-   `www.pizza-vellano.fr`.
-2. Pointer la zone DNS du domaine vers GitHub Pages (enregistrement CNAME
-   vers `sachaprovence.github.io`).
-3. Activer le domaine personnalisé dans les paramètres Pages du dépôt.
-4. Remplacer `https://sachaprovence.github.io/pizza-vellano` par
-   `https://www.pizza-vellano.fr` dans les balises `canonical`, `og:url`,
-   `og:image` et les données structurées Schema.org de `index.html`,
-   `mentions-legales.html` et `confidentialite.html`.
+- `www` : `CNAME` vers `sachaprovence.github.io`.
+- Apex (`pizza-vellano.fr`, hostname `@`) : 4 enregistrements `A` vers
+  `185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
+  `185.199.111.153` (et idéalement les 4 `AAAA` `2606:50c0:8000::153` à
+  `2606:50c0:8003::153`), pour que GitHub redirige automatiquement
+  l'apex vers `www`.
+
+Dans les paramètres Pages du dépôt (Settings → Pages), le domaine
+personnalisé doit être vérifié et actif, avec "Enforce HTTPS" activé une
+fois le certificat émis.
 
 ## 1. Mettre le site en ligne ailleurs (nom de domaine définitif)
 
@@ -73,10 +74,11 @@ définitif plutôt que sur GitHub Pages :
 2. Configurez `www.pizza-vellano.fr` auprès de l'hébergeur (zone DNS chez
    le registrar, puis réglage du domaine personnalisé côté hébergeur).
 3. Les URL de `index.html`, `mentions-legales.html` et
-   `confidentialite.html` pointent actuellement vers
-   `https://sachaprovence.github.io/pizza-vellano` (balises `canonical`,
-   `og:url`, `og:image`, données structurées) : recherchez cette URL dans
-   ces fichiers et remplacez-la par le domaine définitif choisi.
+   `confidentialite.html` pointent déjà vers `https://www.pizza-vellano.fr`
+   (balises `canonical`, `og:url`, `og:image`, données structurées) : rien
+   à changer ici tant que le domaine choisi reste celui-ci. Si le domaine
+   final diffère, recherchez `https://www.pizza-vellano.fr` dans ces
+   fichiers et remplacez-le.
 
 **Pour tester en local avant mise en ligne**, ouvrez simplement
 `index.html` dans un navigateur, ou lancez un petit serveur local depuis
