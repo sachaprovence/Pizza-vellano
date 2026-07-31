@@ -464,6 +464,7 @@
   .pv-craft__row--reverse .pv-craft__media { order: 2; }
 }
 .pv-craft__media { aspect-ratio: 5 / 4; border-radius: var(--pv-radius-lg); overflow: hidden; box-shadow: var(--pv-shadow-md); }
+.pv-craft__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .pv-craft__title { margin-bottom: var(--pv-space-3); }
 .pv-craft__text { color: var(--pv-color-ink-soft); max-width: 46ch; }
 
