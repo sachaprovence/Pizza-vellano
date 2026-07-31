@@ -78,7 +78,7 @@ window.PIZZA_VELLANO_CONFIG = {
      confirmée : le lien correspondant reste alors masqué automatiquement.
      ----------------------------------------------------------------------- */
   social: {
-    facebookUrl: ""
+    facebookUrl: "https://www.facebook.com/share/1SqY1Ksx4q/?mibextid=wwXIfr"
   },
 
   /* -----------------------------------------------------------------------

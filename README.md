@@ -221,12 +221,6 @@ pv-review--link">…</a>`.
 - Numéro SIRET, forme juridique, nom du responsable de publication
   (mentions légales).
 - Nom de l'hébergeur du site une fois choisi (mentions légales).
-- **Page Facebook** : une page nommée « PIZZA Vellano Velleron » a été
-  trouvée (`https://www.facebook.com/PizzaVellano/`), mais son
-  appartenance à l'établissement n'a pas pu être vérifiée automatiquement
-  (Facebook bloque l'accès automatisé à ses pages). Confirmez qu'il s'agit
-  bien de la page officielle avant de la renseigner dans
-  `assets/js/config.js` (`social.facebookUrl`).
 - Coordonnées GPS précises de l'établissement (`assets/js/config.js`,
   champ `geo` — actuellement le centre approximatif de Velleron).
 - Disponibilité d'une visite virtuelle/3D (et son URL d'intégration une

@@ -327,12 +327,10 @@
           <p>Vous partez en vacances, assistez à un événement ou découvrez un endroit exceptionnel ? Emportez un menu Pizza Vellano, photographiez-le et envoyez-nous votre plus beau souvenir. Votre photo pourra rejoindre notre album de voyage.</p>
           <div class="pv-btn-row" style="justify-content:center;">
             <a class="pv-btn pv-btn--primary" href="tel:+33490201572">Faire voyager le menu</a>
-            <!-- TODO: aucun canal Instagram / WhatsApp / e-mail dédié n'est encore
-                 configuré pour recevoir les photos des clients. En attendant,
-                 ce bouton pointe vers le seul contact réellement actif du site
-                 (téléphone) et bascule automatiquement sur le Facebook de la
-                 pizzeria dès que CONFIG.social.facebookUrl (assets/js/config.js)
-                 sera renseigné — voir assets/js/main.js, bloc "VOYAGES". -->
+            <!-- Pointe vers CONFIG.social.facebookUrl (assets/js/config.js),
+                 réglé via assets/js/main.js, bloc "VOYAGES". Fallback tel:
+                 conservé dans le href ci-dessous si ce champ venait à être
+                 vidé de nouveau. -->
             <a class="pv-btn pv-btn--secondary" id="pv-voyages-send-photo" href="tel:+33490201572">Envoyer ma photo</a>
           </div>
         </div>

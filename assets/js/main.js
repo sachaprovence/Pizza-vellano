@@ -680,10 +680,9 @@
   }
 
   /* -----------------------------------------------------------------------
-     Bouton « Envoyer ma photo » (section VOYAGES) — bascule sur le Facebook
-     de la pizzeria dès qu'il sera configuré ; en attendant, garde le lien
-     tel: déjà présent dans le HTML (voir TODO à côté du bouton dans
-     index.html).
+     Bouton « Envoyer ma photo » (section VOYAGES) — pointe vers le Facebook
+     de la pizzeria (CONFIG.social.facebookUrl) ; conserve le lien tel: déjà
+     présent dans le HTML comme repli si ce champ redevenait vide un jour.
      ----------------------------------------------------------------------- */
   var sendPhotoLink = document.getElementById("pv-voyages-send-photo");
   if (sendPhotoLink && CONFIG.social && CONFIG.social.facebookUrl) {
