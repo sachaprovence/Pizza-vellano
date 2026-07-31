@@ -358,6 +358,232 @@
   }
 
   /* -----------------------------------------------------------------------
+     VOYAGES — carrousel « Pizza Vellano voyage avec vous »
+     ----------------------------------------------------------------------- */
+  var VOYAGES = window.PIZZA_VELLANO_VOYAGES || [];
+  var voyagesCarousel = document.getElementById("pv-voyages-carousel");
+  var voyagesViewport = document.getElementById("pv-voyages-viewport");
+  var voyagesTrack = document.getElementById("pv-voyages-track");
+  var voyagesDotsWrap = document.getElementById("pv-voyages-dots");
+  var voyagesPrevBtn = document.getElementById("pv-voyages-prev");
+  var voyagesNextBtn = document.getElementById("pv-voyages-next");
+  var voyagesLightbox = document.getElementById("pv-voyages-lightbox");
+
+  var pauseVoyagesAutoplay = function () {};
+  var resumeVoyagesAutoplay = function () {};
+  var openVoyagesLightboxFn = function () {};
+
+  if (voyagesCarousel && voyagesViewport && voyagesTrack && VOYAGES.length) {
+    var vIndex = 0;
+    var vAutoplayTimer = null;
+    var vReducedMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    var vAutoplayWasRunning = false;
+
+    if (vReducedMotion) {
+      voyagesCarousel.setAttribute("data-reduced-motion", "true");
+    }
+
+    /* Construction des slides à partir de la structure de données unique
+       (window.PIZZA_VELLANO_VOYAGES) : ajouter une photo = ajouter une
+       entrée dans ce tableau, rien d'autre à modifier ici. */
+    VOYAGES.forEach(function (photo, i) {
+      var slide = document.createElement("div");
+      slide.className = "pv-voyages__slide";
+      slide.dataset.index = String(i);
+
+      var frame = document.createElement("button");
+      frame.type = "button";
+      frame.className = "pv-voyages__frame";
+      frame.setAttribute("aria-label", "Agrandir la photo : " + (photo.caption || photo.alt));
+
+      var bg = document.createElement("span");
+      bg.className = "pv-voyages__bg";
+      bg.style.backgroundImage = "url(" + photo.src + ")";
+      bg.setAttribute("aria-hidden", "true");
+      frame.appendChild(bg);
+
+      var img = document.createElement("img");
+      img.className = "pv-voyages__img";
+      img.src = photo.src;
+      img.alt = photo.alt || "";
+      img.loading = i === 0 ? "eager" : "lazy";
+      frame.appendChild(img);
+
+      slide.appendChild(frame);
+
+      if (photo.caption || photo.location) {
+        var caption = document.createElement("p");
+        caption.className = "pv-voyages__caption";
+        caption.textContent = photo.caption || "";
+        if (photo.location) {
+          var loc = document.createElement("span");
+          loc.className = "pv-voyages__location";
+          loc.textContent = (photo.caption ? " — " : "") + photo.location;
+          caption.appendChild(loc);
+        }
+        slide.appendChild(caption);
+      }
+
+      frame.addEventListener("click", function () { openVoyagesLightboxFn(i); });
+
+      voyagesTrack.appendChild(slide);
+    });
+
+    var voyagesSlides = Array.prototype.slice.call(voyagesTrack.querySelectorAll(".pv-voyages__slide"));
+
+    VOYAGES.forEach(function (photo, i) {
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "pv-voyages__dot";
+      dot.setAttribute("aria-label", "Aller à la photo " + (i + 1) + " sur " + VOYAGES.length);
+      dot.addEventListener("click", function () { goToVoyageSlide(i); });
+      voyagesDotsWrap.appendChild(dot);
+    });
+    var voyagesDots = Array.prototype.slice.call(voyagesDotsWrap.querySelectorAll(".pv-voyages__dot"));
+
+    function updateVoyagesPosition() {
+      var slideEl = voyagesSlides[0];
+      if (!slideEl) return;
+      var slideWidth = slideEl.getBoundingClientRect().width;
+      var gap = parseFloat(window.getComputedStyle(voyagesTrack).columnGap || window.getComputedStyle(voyagesTrack).gap || "0") || 0;
+      var offset = vIndex * (slideWidth + gap);
+      var centering = (voyagesViewport.clientWidth - slideWidth) / 2;
+      voyagesTrack.style.transform = "translateX(" + (centering - offset) + "px)";
+    }
+
+    function renderVoyagesState() {
+      voyagesSlides.forEach(function (slide, i) {
+        slide.setAttribute("data-active", i === vIndex ? "true" : "false");
+      });
+      voyagesDots.forEach(function (dot, i) {
+        dot.setAttribute("aria-current", i === vIndex ? "true" : "false");
+      });
+      updateVoyagesPosition();
+    }
+
+    function goToVoyageSlide(i) {
+      vIndex = (i + voyagesSlides.length) % voyagesSlides.length;
+      renderVoyagesState();
+    }
+
+    function nextVoyageSlide() { goToVoyageSlide(vIndex + 1); }
+    function prevVoyageSlide() { goToVoyageSlide(vIndex - 1); }
+
+    function startVoyagesAutoplay() {
+      if (vReducedMotion) return;
+      stopVoyagesAutoplay();
+      vAutoplayTimer = window.setInterval(nextVoyageSlide, 5000);
+    }
+    function stopVoyagesAutoplay() {
+      if (vAutoplayTimer) {
+        window.clearInterval(vAutoplayTimer);
+        vAutoplayTimer = null;
+      }
+    }
+    pauseVoyagesAutoplay = function () {
+      vAutoplayWasRunning = !!vAutoplayTimer;
+      stopVoyagesAutoplay();
+    };
+    resumeVoyagesAutoplay = function () {
+      if (vAutoplayWasRunning) startVoyagesAutoplay();
+    };
+
+    voyagesPrevBtn.addEventListener("click", function () { prevVoyageSlide(); startVoyagesAutoplay(); });
+    voyagesNextBtn.addEventListener("click", function () { nextVoyageSlide(); startVoyagesAutoplay(); });
+
+    voyagesCarousel.addEventListener("mouseenter", pauseVoyagesAutoplay);
+    voyagesCarousel.addEventListener("mouseleave", resumeVoyagesAutoplay);
+    voyagesCarousel.addEventListener("focusin", pauseVoyagesAutoplay);
+    voyagesCarousel.addEventListener("focusout", resumeVoyagesAutoplay);
+
+    voyagesCarousel.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); nextVoyageSlide(); startVoyagesAutoplay(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); prevVoyageSlide(); startVoyagesAutoplay(); }
+    });
+
+    var vTouchStartX = null;
+    voyagesViewport.addEventListener("touchstart", function (e) {
+      vTouchStartX = e.touches[0].clientX;
+      pauseVoyagesAutoplay();
+    }, { passive: true });
+    voyagesViewport.addEventListener("touchend", function (e) {
+      if (vTouchStartX === null) return;
+      var dx = e.changedTouches[0].clientX - vTouchStartX;
+      if (Math.abs(dx) > 40) { dx < 0 ? nextVoyageSlide() : prevVoyageSlide(); }
+      vTouchStartX = null;
+      resumeVoyagesAutoplay();
+    });
+
+    var vResizeTimer = null;
+    window.addEventListener("resize", function () {
+      window.clearTimeout(vResizeTimer);
+      vResizeTimer = window.setTimeout(updateVoyagesPosition, 120);
+    });
+
+    renderVoyagesState();
+    startVoyagesAutoplay();
+
+    /* Lightbox dédiée : ouverture en grand au clic, indépendante de la
+       lightbox de la galerie (structure HTML identique, styles partagés). */
+    if (voyagesLightbox) {
+      var vlbMedia = voyagesLightbox.querySelector(".pv-lightbox__media");
+      var vlbCaption = voyagesLightbox.querySelector(".pv-lightbox__caption");
+      var vlbClose = voyagesLightbox.querySelector(".pv-lightbox__close");
+      var vlbPrev = voyagesLightbox.querySelector(".pv-lightbox__prev");
+      var vlbNext = voyagesLightbox.querySelector(".pv-lightbox__next");
+      var vlbIndex = 0;
+      var vlbLastFocused = null;
+
+      var renderVoyagesLightbox = function (i) {
+        vlbIndex = (i + VOYAGES.length) % VOYAGES.length;
+        var photo = VOYAGES[vlbIndex];
+        var img = document.createElement("img");
+        img.src = photo.src;
+        img.alt = photo.alt || "";
+        vlbMedia.innerHTML = "";
+        vlbMedia.appendChild(img);
+        vlbCaption.textContent = photo.location ? (photo.caption || "") + " — " + photo.location : (photo.caption || "");
+      };
+
+      openVoyagesLightboxFn = function (i) {
+        vlbLastFocused = document.activeElement;
+        renderVoyagesLightbox(i);
+        voyagesLightbox.setAttribute("data-open", "true");
+        voyagesLightbox.removeAttribute("hidden");
+        document.body.style.overflow = "hidden";
+        vlbClose.focus();
+        pauseVoyagesAutoplay();
+      };
+      var closeVoyagesLightboxFn = function () {
+        voyagesLightbox.setAttribute("data-open", "false");
+        document.body.style.overflow = "";
+        if (vlbLastFocused) vlbLastFocused.focus();
+        resumeVoyagesAutoplay();
+      };
+
+      vlbClose.addEventListener("click", closeVoyagesLightboxFn);
+      vlbPrev.addEventListener("click", function () { renderVoyagesLightbox(vlbIndex - 1); });
+      vlbNext.addEventListener("click", function () { renderVoyagesLightbox(vlbIndex + 1); });
+      voyagesLightbox.addEventListener("click", function (e) {
+        if (e.target === voyagesLightbox) closeVoyagesLightboxFn();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (voyagesLightbox.getAttribute("data-open") !== "true") return;
+        if (e.key === "Escape") closeVoyagesLightboxFn();
+        if (e.key === "ArrowRight") renderVoyagesLightbox(vlbIndex + 1);
+        if (e.key === "ArrowLeft") renderVoyagesLightbox(vlbIndex - 1);
+        if (e.key === "Tab") {
+          var focusables = voyagesLightbox.querySelectorAll("button");
+          var first = focusables[0];
+          var last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+    }
+  }
+
+  /* -----------------------------------------------------------------------
      VISITE VIRTUELLE — chargement différé au clic uniquement
      ----------------------------------------------------------------------- */
   var tourButton = document.getElementById("pv-tour-launch");
@@ -451,6 +677,19 @@
     } else {
       facebookLink.hidden = true;
     }
+  }
+
+  /* -----------------------------------------------------------------------
+     Bouton « Envoyer ma photo » (section VOYAGES) — bascule sur le Facebook
+     de la pizzeria dès qu'il sera configuré ; en attendant, garde le lien
+     tel: déjà présent dans le HTML (voir TODO à côté du bouton dans
+     index.html).
+     ----------------------------------------------------------------------- */
+  var sendPhotoLink = document.getElementById("pv-voyages-send-photo");
+  if (sendPhotoLink && CONFIG.social && CONFIG.social.facebookUrl) {
+    sendPhotoLink.href = CONFIG.social.facebookUrl;
+    sendPhotoLink.target = "_blank";
+    sendPhotoLink.rel = "noopener";
   }
 
   /* -----------------------------------------------------------------------

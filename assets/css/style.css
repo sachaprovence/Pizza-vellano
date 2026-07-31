@@ -675,3 +675,172 @@ body.pv-has-mobilebar .pv-cookie { bottom: calc(72px + var(--pv-space-3)); }
   .pv-header, .pv-footer, .pv-burger, .pv-mobilebar, .pv-cookie, .pv-lightbox, .pv-tour { display: none; }
   .pv-reveal { opacity: 1 !important; transform: none !important; }
 }
+
+/* -------------------------------------------------------------------------
+   19. VOYAGES — « Pizza Vellano voyage avec vous »
+   ------------------------------------------------------------------------- */
+.pv-voyages__highlight {
+  background: var(--pv-color-paper);
+  border-left: 4px solid var(--pv-color-tomato);
+  border-radius: var(--pv-radius-md);
+  padding: var(--pv-space-6);
+  margin: var(--pv-space-6) 0;
+  font-family: var(--pv-font-display);
+  font-style: italic;
+  font-size: var(--pv-fs-lead);
+  line-height: var(--pv-lh-body);
+  color: var(--pv-color-charcoal);
+  max-width: 68ch;
+}
+
+.pv-voyages__question {
+  font-family: var(--pv-font-display);
+  font-size: var(--pv-fs-h3);
+  font-weight: 600;
+  text-align: center;
+  color: var(--pv-color-sand);
+  margin: var(--pv-space-7) 0 var(--pv-space-6);
+}
+
+.pv-voyages__carousel {
+  position: relative;
+  border-radius: var(--pv-radius-lg);
+}
+.pv-voyages__carousel:focus-visible {
+  outline: 2px solid var(--pv-color-focus);
+  outline-offset: 6px;
+}
+
+.pv-voyages__viewport { overflow: hidden; }
+
+.pv-voyages__track {
+  display: flex;
+  gap: var(--pv-space-4);
+  transition: transform var(--pv-dur-slow) var(--pv-ease);
+}
+.pv-voyages__carousel[data-reduced-motion="true"] .pv-voyages__track {
+  transition: none;
+}
+
+.pv-voyages__slide {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+@media (min-width: 800px) {
+  .pv-voyages__slide { flex: 0 0 64%; max-width: 64%; }
+}
+
+.pv-voyages__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--pv-radius-lg);
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: zoom-in;
+  background: var(--pv-color-night);
+  box-shadow: var(--pv-shadow-md);
+  opacity: 0.45;
+  transition: opacity var(--pv-dur-base) var(--pv-ease);
+}
+.pv-voyages__slide[data-active="true"] .pv-voyages__frame { opacity: 1; }
+@media (max-width: 799px) {
+  .pv-voyages__frame { opacity: 1; }
+}
+
+.pv-voyages__bg {
+  position: absolute;
+  inset: -8%;
+  background-position: center;
+  background-size: cover;
+  filter: blur(28px) brightness(0.7);
+  transform: scale(1.08);
+}
+
+.pv-voyages__img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pv-voyages__caption {
+  margin: var(--pv-space-3) 0 0;
+  text-align: center;
+  font-size: var(--pv-fs-small);
+  color: var(--pv-color-ink-soft);
+}
+.pv-voyages__location { opacity: 0.8; }
+
+.pv-voyages__arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--pv-color-line);
+  background: rgba(36, 36, 38, 0.72);
+  color: var(--pv-color-charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--pv-dur-fast) var(--pv-ease);
+}
+.pv-voyages__arrow:hover, .pv-voyages__arrow:focus-visible { border-color: var(--pv-color-sand); }
+.pv-voyages__arrow--prev { left: var(--pv-space-2); }
+.pv-voyages__arrow--next { right: var(--pv-space-2); }
+.pv-voyages__arrow svg { width: 20px; height: 20px; }
+@media (max-width: 799px) {
+  .pv-voyages__arrow { width: 36px; height: 36px; }
+  .pv-voyages__arrow svg { width: 16px; height: 16px; }
+}
+
+.pv-voyages__dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pv-space-2);
+  margin-top: var(--pv-space-5);
+  max-width: 90%;
+  margin-inline: auto;
+}
+.pv-voyages__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: var(--pv-color-line);
+  cursor: pointer;
+}
+.pv-voyages__dot[aria-current="true"] {
+  background: var(--pv-color-sand);
+  width: 22px;
+  border-radius: 4px;
+  transition: width var(--pv-dur-base) var(--pv-ease);
+}
+
+.pv-voyages__cta {
+  margin-top: var(--pv-space-8);
+  background: var(--pv-color-paper);
+  border-radius: var(--pv-radius-lg);
+  padding: var(--pv-space-7);
+  text-align: center;
+}
+.pv-voyages__cta p {
+  max-width: 60ch;
+  margin: 0 auto var(--pv-space-6);
+  color: var(--pv-color-ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv-voyages__track { transition: none !important; }
+  .pv-voyages__frame { transition: none !important; }
+}

@@ -295,6 +295,50 @@
       </div>
     </section>
 
+    <!-- ============================= PIZZA VELLANO VOYAGE AVEC VOUS ============================= -->
+    <section class="pv-section" id="voyages">
+      <div class="pv-container">
+        <span class="pv-eyebrow pv-reveal">Une tradition Pizza Vellano</span>
+        <h2 class="pv-h2 pv-reveal">Pizza Vellano voyage avec vous</h2>
+
+        <p class="pv-lead pv-reveal">Depuis des années, nos clients glissent un menu Pizza Vellano dans leurs valises avant de partir en vacances, d'assister à un événement ou de découvrir un nouvel endroit.</p>
+        <p class="pv-lead pv-reveal">Une fois arrivés, ils le photographient devant un monument, dans un stade ou au cours d'une rencontre inattendue. Grâce à eux, un petit morceau de notre pizzeria de Velleron voyage partout en France et dans le monde.</p>
+        <p class="pv-lead pv-reveal">Chaque photo raconte un voyage, un souvenir et un morceau de l'histoire de Pizza Vellano.</p>
+
+        <blockquote class="pv-voyages__highlight pv-reveal">Grâce à vous, Pizza Vellano a déjà vibré avec l'OM au Vélodrome, assisté à des concerts, rencontré Freddy Krueger, visité Madame Tussauds, admiré la fontaine de Trevi, découvert la Sagrada Família, contemplé Barcelone depuis le parc Güell et fait une halte à Saint-Tropez…</blockquote>
+
+        <p class="pv-voyages__question pv-reveal">Et vous, où ferez-vous voyager Pizza Vellano ?</p>
+
+        <div class="pv-voyages__carousel pv-reveal" id="pv-voyages-carousel" role="region" aria-roledescription="carrousel" aria-label="Photos de voyage du menu Pizza Vellano" tabindex="0">
+          <div class="pv-voyages__viewport" id="pv-voyages-viewport">
+            <div class="pv-voyages__track" id="pv-voyages-track"></div>
+          </div>
+          <button type="button" class="pv-voyages__arrow pv-voyages__arrow--prev" id="pv-voyages-prev" aria-label="Photo de voyage précédente">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="pv-voyages__arrow pv-voyages__arrow--next" id="pv-voyages-next" aria-label="Photo de voyage suivante">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="pv-voyages__dots" id="pv-voyages-dots" role="tablist" aria-label="Choisir une photo de voyage"></div>
+        </div>
+
+        <div class="pv-voyages__cta pv-reveal">
+          <h3 class="pv-h3">Le prochain voyage sera peut-être le vôtre</h3>
+          <p>Vous partez en vacances, assistez à un événement ou découvrez un endroit exceptionnel ? Emportez un menu Pizza Vellano, photographiez-le et envoyez-nous votre plus beau souvenir. Votre photo pourra rejoindre notre album de voyage.</p>
+          <div class="pv-btn-row" style="justify-content:center;">
+            <a class="pv-btn pv-btn--primary" href="tel:+33490201572">Faire voyager le menu</a>
+            <!-- TODO: aucun canal Instagram / WhatsApp / e-mail dédié n'est encore
+                 configuré pour recevoir les photos des clients. En attendant,
+                 ce bouton pointe vers le seul contact réellement actif du site
+                 (téléphone) et bascule automatiquement sur le Facebook de la
+                 pizzeria dès que CONFIG.social.facebookUrl (assets/js/config.js)
+                 sera renseigné — voir assets/js/main.js, bloc "VOYAGES". -->
+            <a class="pv-btn pv-btn--secondary" id="pv-voyages-send-photo" href="tel:+33490201572">Envoyer ma photo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============================= VISITE VIRTUELLE ============================= -->
     <section class="pv-section">
       <div class="pv-container">
@@ -439,7 +483,7 @@
       <div class="pv-footer__bottom">
         <span>© <span data-pv-year>2026</span> Pizza Vellano. Tous droits réservés.</span>
         <span><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Politique de confidentialité</a></span>
-        <span>Site conçu par [NOM DU CONCEPTEUR À COMPLÉTER]</span>
+        <span>Site conçu par Provence360</span>
       </div>
     </div>
   </footer>
@@ -471,6 +515,17 @@
     </div>
   </div>
 
+  <!-- ============================= LIGHTBOX VOYAGES ============================= -->
+  <div class="pv-lightbox" id="pv-voyages-lightbox" data-open="false" hidden role="dialog" aria-modal="true" aria-label="Photo de voyage agrandie">
+    <div class="pv-lightbox__dialog">
+      <button type="button" class="pv-lightbox__close" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <button type="button" class="pv-lightbox__prev" aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="pv-lightbox__media"></div>
+      <button type="button" class="pv-lightbox__next" aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <p class="pv-lightbox__caption"></p>
+    </div>
+  </div>
+
   <!-- ============================= BANDEAU COOKIES ============================= -->
   <div class="pv-cookie" id="pv-cookie" data-visible="false" role="region" aria-label="Information sur les cookies">
     <p>Ce site utilise uniquement des services techniques nécessaires à son fonctionnement (carte, polices) — aucun cookie publicitaire. En savoir plus dans notre <a href="confidentialite.html">politique de confidentialité</a>.</p>
@@ -481,6 +536,7 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/pizzas-data.js"></script>
+<script src="assets/js/voyages-data.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
