@@ -231,7 +231,7 @@
 .pv-header[data-scrolled="true"] .pv-header__bar { height: var(--pv-header-h-compact); }
 
 .pv-logo { display: flex; align-items: center; gap: var(--pv-space-2); font-family: var(--pv-font-display); font-style: italic; font-size: 1.4rem; font-weight: 600; color: var(--pv-color-charcoal); flex-shrink: 0; letter-spacing: 0.01em; }
-.pv-logo svg { width: 32px; height: 32px; flex-shrink: 0; color: var(--pv-color-sand); }
+.pv-logo__mark { height: 34px; width: auto; flex-shrink: 0; display: block; }
 
 .pv-nav { display: flex; align-items: center; gap: var(--pv-space-6); }
 .pv-nav__list { display: flex; align-items: center; gap: var(--pv-space-6); list-style: none; margin: 0; padding: 0; }
@@ -595,7 +595,7 @@
 .pv-footer__grid { display: grid; gap: var(--pv-space-7); grid-template-columns: 1fr; }
 @media (min-width: 780px) { .pv-footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
 .pv-footer__brand { display: flex; align-items: center; gap: var(--pv-space-2); color: var(--pv-color-white); font-family: var(--pv-font-display); font-size: 1.2rem; margin-bottom: var(--pv-space-3); }
-.pv-footer__brand svg { width: 28px; height: 28px; color: var(--pv-color-sand); }
+.pv-footer__brand .pv-logo__mark { height: 30px; }
 .pv-footer h4 { color: var(--pv-color-white); font-size: var(--pv-fs-small); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 var(--pv-space-4); }
 .pv-footer ul { list-style: none; display: flex; flex-direction: column; gap: var(--pv-space-3); }
 .pv-footer a:hover { color: var(--pv-color-white); }
