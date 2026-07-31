@@ -311,7 +311,8 @@
       currentIndex = (index + galleryItems.length) % galleryItems.length;
       var item = galleryItems[currentIndex];
       var caption = item.getAttribute("data-caption") || "";
-      lbMedia.innerHTML = item.querySelector(".pv-placeholder").outerHTML;
+      var media = item.querySelector(".pv-gallery__img, .pv-placeholder");
+      lbMedia.innerHTML = media ? media.outerHTML : "";
       lbCaption.textContent = caption;
     }
 
